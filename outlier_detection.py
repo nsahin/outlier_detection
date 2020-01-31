@@ -39,7 +39,7 @@ if __name__ == '__main__':
         df = gmm_method(df, neg_controls, output)
 
     # Threshold scores for identifying outliers
-    df = identify_outliers(df, neg_controls, output, args.od_thresholds)
+    df = identify_outliers(df, neg_controls, args.od_thresholds)
 
     # Prepare penetrance files
     df_output = prepare_output_results(df, neg_controls, output,

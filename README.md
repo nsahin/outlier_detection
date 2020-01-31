@@ -81,7 +81,7 @@ Example file at _input/screen1_mapping.csv_
 **--output_file** (-o): A path to save the result files.
 Example output files at _output/_
 
-**--od_thresholds** : A list of thresholds for the hard-thresholding method for the scoring on outlier detection.
+**--od_thresholds** : A list of thresholds for the hard thresholding method for the scoring on outlier detection.
 Default thresholds are [1, 5, 10, 15, 20, 25, 30] that translates to 99th, 95th, 90th, 85th, 80th, 75th and 70th percentile of wild-type scores.
 
 **--preprocess_data** (-p): The features are standardized and PCA is applied.

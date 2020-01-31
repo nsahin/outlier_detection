@@ -223,13 +223,12 @@ def gmm_method(df, neg, output):
     return df
 
 
-def identify_outliers(df, neg, output, od_thresholds):
+def identify_outliers(df, neg, od_thresholds):
     """ Outlier Detection with different OD thresholds.
 
         Args:
             df (pd.DataFrame): Single cell data and information
             neg (np.array): Negative control group ids
-            output (dict): Output filenames
             od_thresholds (list): Threshold on the right tail to decide on outlier boundary
 
         Returns:
@@ -238,7 +237,6 @@ def identify_outliers(df, neg, output, od_thresholds):
 
     # Subset relevant data
     neg_scores = df[df['group_id'].isin(neg)]['score'].values
-    data_all = df.iloc[:, 2:-1].values
 
     is_inlier_columns = []
     for ODT in od_thresholds:
