@@ -20,6 +20,7 @@ Performance in terms of AUPR and AUROC are calculated if positive controls are p
 We also provide our script to extract deep learning (DL) features from pre-trained networks.
 
 
+
 ## Packages
 
 Python 3.6+: http://www.python.org/getit/
@@ -105,5 +106,43 @@ The method and wall time of outlier detection, sample count of the whole screen 
 The mean of the wild-type (neg) percentile at each of the threshold scores is also provided.
 If the controls_file contains positive controls, the performance is calculated separately for different thresholding methods in terms of AUPR and AUROC.
 
-**neg_percentile.png**: The maximum difference method find a separate score threshold for each perturbed population to identify outlier cells.
-The kernel density estimate plot of the wild-type (neg) percentile at each of the threshold scores is shown in this file with the mean percentile calculated.
+
+## Running Deep Learning feature extraction
+
+Please use Argument Parser, for example:
+
+    python extract_DL_features.py
+    --input_file input/screen1_input.csv
+    --controls_file input/screen1_controls.csv
+    --method GMM
+    --mapping_file input/screen1_mapping.csv
+
+
+### Input Options
+
+**--input_file** (-i): A .csv file of single cell coordinates from full (population) images.
+Each row should be a single cell, with the first column being a unique cell identifier (sample_id)
+The group identifier (group_id) can also be provided for mapping but not required.
+The location of full images and the xy coordinates of single cells should be provided with the column names as 'image_path', 'center_x' and 'center_y'.
+Example file at _input/screen1_image_paths.csv_
+
+**--mapping_file** (-f): This sheet contains group information for each population in the screen.
+This is not a required file, it is only used to combine the feature information with group information.
+It should have a group_id column that is matched with the input file.
+Example file at _input/screen1_mapping.csv_
+
+**--model** (-m): The pretrained network should be provided as an .h5 file to extract the features from.
+This script is written to extract features from the last 2 fully connected layers of a CNN with both layers having 512 units each.
+The script should be edited in "extract_features" and "initialize_data" functions to fit the inputted network if the architecture is different than the original architecture used as in Kraus et al 2017 (doi: 10.15252/msb.20177551).
+
+**--crop_size** (-c): The crop size to put a bounding box around single cells.
+Default is 64 to fit the original CNN architecture.
+
+**--num_channels** (-n): Number of channels for the model and images, implemented only for 1 or 2 channels.
+
+
+### Output Files
+
+**DL_features_samples.csv**: The feature file is provided with sample_ids and features extracted as activations of the last two fully connected layers.
+ 
+**DL_features_groups.csv**: The group information is appended to the feature file.

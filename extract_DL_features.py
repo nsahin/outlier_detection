@@ -38,12 +38,11 @@ class ExtractFeatures:
     multi_field_image = False
     out = None
 
-    def __init__(self, input_file, mapping_file, model, channels, single_channel_only, crop):
+    def __init__(self, input_file, mapping_file, model, channels, crop):
         self.input_file = input_file
         self.mapping_file = mapping_file
         self.num_channels = channels
         self.model_name = model
-        self.single_channel = single_channel_only
         self.crop_size = crop
         logging.info('Processing images with %d channels', self.num_channels)
 
@@ -68,14 +67,15 @@ class ExtractFeatures:
 
     # noinspection PyUnresolvedReferences
     def _process_single_image(self, path, image_dataframe):
-        image = imread(path)
+        image = imread(path, plugin='tifffile')
         channels = []
 
         if self.num_channels == 1:
-            if self.single_channel:
-                channels.append(image[0::2])
-            else:
+            # If the image is stored as one channel
+            if len(image.shape) == 2:
                 channels.append(image)
+            else:
+                channels.append(image[0::2])
         else:
             channels.append(image[0::2])
             channels.append(image[1::2])
@@ -86,8 +86,6 @@ class ExtractFeatures:
         for rid, row in image_dataframe.iterrows():
             cell_start = datetime.now()
             row_channels = channels
-            if self.multi_field_image:
-                row_channels = [c[row.field] for c in row_channels]
 
             cropped = [crop_cells(row.center_x, row.center_y, self.crop_size, image) for image in row_channels]
             if cropped[0] is None:
@@ -149,8 +147,6 @@ if __name__ == '__main__':
                         help='Single cell bounding box size')
     parser.add_argument('-n', '--num_channels', type=int, default=1, choices=[1, 2],
                         help='Number of channels for the model and images, implemented only for 1 or 2 channels')
-    parser.add_argument('-s', '--single_channel', action='store_false', default=True,
-                        help='Extracts features from the first channel if the image is multi-channel')
     args = parser.parse_args()
 
     # Start logging
@@ -164,8 +160,7 @@ if __name__ == '__main__':
     logging.getLogger('').addHandler(logfile)
 
     # Extract features
-    extract = ExtractFeatures(args.input_file, args.mapping_file, args.model,
-                              args.num_channels, args.single_channel, args.crop_size)
+    extract = ExtractFeatures(args.input_file, args.mapping_file, args.model, args.num_channels, args.crop_size)
     extract.load_trained_model()
     extract.initialize_data()
     extract.process_images()

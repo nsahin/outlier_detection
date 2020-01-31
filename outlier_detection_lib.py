@@ -1,9 +1,7 @@
 import time
 import pathlib
-import seaborn as sns
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 from scipy import stats, spatial
 from sklearn import svm, metrics, mixture
 from sklearn.decomposition import PCA
@@ -34,8 +32,6 @@ def create_output_filenames(output_folder, input_file, method, kernel):
     # Create output filenames
     output = {'od_results': '%s/%s_OD_results.csv' % (str(output_path), screen_name),
               'score_cells': '%s/%s_OD_results_score.csv' % (str(output_path), screen_name),
-              'pca_cells': '%s/%s_PCA_cells' % (str(output_path), screen_name),
-              'neg_percentile': '%s/%s_neg_percentile' % (str(output_path), screen_name),
               'log': '%s/%s_log.txt' % (str(output_path), screen_name)
               }
 
@@ -360,18 +356,7 @@ def prepare_output_results(df, neg, output, od_thresholds, mapping_file):
     df = df_scores.merge(df, how='inner', on=['sample_id'])
     df.to_csv(output['score_cells'], index=False)
 
-    # Plot negative samples percentile distribution
-    plt.figure(figsize=(6, 6))
-    sns.set(font_scale=1.25)
-    sns.set_style('white')
-    sns.kdeplot(df_output.neg_percentile_at_threshold.values, color='mediumblue', shade=True)
-    plt.xlabel('neg percentile at the score of maximum difference')
-    mean_percentile = np.mean(df_output.neg_percentile_at_threshold.values)
-    plt.title('Mean percentile: %.4f' % mean_percentile)
-    fig = plt.gcf()
-    fig.savefig('%s.png' % output['neg_percentile'], dpi=150, bbox_inches='tight')
-    fig.clf()
-    plt.close(fig)
+    # The mean of negative percentile at the thresholds
     mean_neg_percentile = np.mean(df_output['neg_percentile_at_threshold'])
     log_write(output['log'], 'Mean neg percentile at thresholds: %.2f\n' % mean_neg_percentile)
 
