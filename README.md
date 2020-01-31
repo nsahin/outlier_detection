@@ -116,7 +116,6 @@ Please use Argument Parser, for example:
 
     python extract_DL_features.py
     --input_file input/screen1_image_paths.csv
-    --controls_file input/screen1_controls.csv
     --model input/cnn_weights.h5
 
 

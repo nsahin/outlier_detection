@@ -21,7 +21,7 @@ def create_output_filenames(output_folder, input_file, method, kernel):
         """
 
     # Create screen name
-    screen_name = '%s_%s' % (input_file.split('/')[-1].replace('_input.csv', ''), method)
+    screen_name = '%s_%s' % (input_file.split('/')[-1].replace('.csv', ''), method)
     if method == 'SVM':
         screen_name += '-%s' % kernel
 
