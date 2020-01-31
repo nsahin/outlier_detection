@@ -47,19 +47,20 @@ The datasets are available at:
 Please use Argument Parser, for example:
 
     python outlier_detection.py
-    --input_file input/screen1_input.csv
+    --input_file input/screen1_features.csv
     --controls_file input/screen1_controls.csv
     --method GMM
-    --mapping_file input/screen1_mapping.csv
 
 
 ### Input Options
+
+Example output files at _input/_
 
 **--input_file** (-i): A .csv file of single cell features.
 Each row should be a single cell, with the first column being a unique cell identifier (sample_id) and the second column being the group identifier (group_id).
 The following columns should be single cell features that are extracted from any method but they should at least be two.
 Considering this to be used in perturbation analyses, each cell should come from a population of cells, therefore the group_id is used to calculate the penetrance of the perturbation.
-Example file at _input/screen1_input.csv_
+Example file at _input/screen1_features.csv_
 
 **--controls_file** (-c): This sheet contains the group_ids of negative and positive control strains.
 Negative controls are the normal (WT, unperturbed) strains and at least one negative control group is required for the outlier detection analysis to work.
@@ -93,6 +94,8 @@ Default is 0.8.
 
 ### Output Files
 
+Example output files at _output/_
+
 **OD_results.csv**: Penetrance calculation in terms of percentage of outlier cells for every perturbed population is provided in this file for all thresholding approaches separately.
 The "penetrance" column is calculated using the maximum difference method and the other penetrance columns are the separate hard thresholds.
 For penetrance using the maximum difference method, the wild-type (neg) percentile at each of the threshold scores to identify cells as outliers is also provided separately for each perturbed population.
@@ -112,13 +115,14 @@ If the controls_file contains positive controls, the performance is calculated s
 Please use Argument Parser, for example:
 
     python extract_DL_features.py
-    --input_file input/screen1_input.csv
+    --input_file input/screen1_image_paths.csv
     --controls_file input/screen1_controls.csv
-    --method GMM
-    --mapping_file input/screen1_mapping.csv
+    --model input/cnn_weights.h5
 
 
 ### Input Options
+
+Example output files at _input/_
 
 **--input_file** (-i): A .csv file of single cell coordinates from full (population) images.
 Each row should be a single cell, with the first column being a unique cell identifier (sample_id)
@@ -142,6 +146,8 @@ Default is 64 to fit the original CNN architecture.
 
 
 ### Output Files
+
+Example output files at _output/_
 
 **DL_features_samples.csv**: The feature file is provided with sample_ids and features extracted as activations of the last two fully connected layers.
  
