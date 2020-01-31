@@ -1,0 +1,18 @@
+Reading input files
+Outlier detection...
+Outlier detection method: GMM 3-components with full covariance
+Outlier detection wall time: 0.00 minutes
+Number of samples: 658
+Number of negative samples: 168
+Mean neg percentile at thresholds: 89.76
+
+Outlier detection threshold performances:
+OD_Threshold,AUPR,AUROC
+Max difference,0.9600,0.9500
+1,1.0000,1.0000
+5,1.0000,1.0000
+10,1.0000,1.0000
+15,1.0000,1.0000
+20,1.0000,1.0000
+25,0.9124,0.9000
+30,0.9600,0.9500
