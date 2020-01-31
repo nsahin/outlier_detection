@@ -149,5 +149,6 @@ Default is 64 to fit the original CNN architecture.
 Example output files at _output/_
 
 **DL_features_samples.csv**: The feature file is provided with sample_ids and features extracted as activations of the last two fully connected layers.
+Example file at _output/screen1_image_paths_DL_features_samples.csv
  
 **DL_features_groups.csv**: The group information is appended to the feature file.
