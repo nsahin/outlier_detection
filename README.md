@@ -3,7 +3,7 @@ This repository contains the code and example datasets for the paper:
 
 "A comparison of automated outlier detection approaches for single cell images"
 
-Nil Sahin, Mojca Mattiazzi Usaj, Matej Usaj, Audrina Zhou, Erin Styles, Charles Boone, Brenda J. Andrews and Quaid Morris
+Nil Sahin, Mojca Mattiazzi Usaj, Matej Usaj, Charles Boone, Brenda J. Andrews and Quaid Morris
 
 This script identify single cells with abnormal phenotypes from genetic or chemical perturbation screens.
 The wild-type (negative) morphology is modelled using one of the four methods and any feature set.
@@ -39,7 +39,7 @@ You can use the following command to install all the required packages:
 The datasets are too large to store in the repository.
 
 The datasets are available at:
-<http://data_link.com>
+<https://thecellvision.org/>
 
 
 ## Running outlier detection
